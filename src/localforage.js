@@ -388,4 +388,4 @@
 
     // The actual localForage object that we expose as a module or via a
     // global. It's extended by pulling in one of our other libraries.
-    var localForage = new LocalForage();
+    var localforage = new LocalForage();
