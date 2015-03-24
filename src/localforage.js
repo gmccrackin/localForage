@@ -325,34 +325,19 @@
             self._ready = null;
 
             if (isLibraryDriver(driverName)) {
-                // We allow localForage to be declared as a module or as a
-                // library available without AMD/require.js.
-                if (moduleType === ModuleType.DEFINE) {
-                    require([driverName], function(lib) {
-                        self._extend(lib);
-
-                        resolve();
-                    });
-
-                    return;
-                } else if (moduleType === ModuleType.EXPORT) {
-                    // Making it browserify friendly
-                    var driver;
-                    switch (driverName) {
-                        case self.INDEXEDDB:
-                            driver = require('./drivers/indexeddb');
-                            break;
-                        case self.LOCALSTORAGE:
-                            driver = require('./drivers/localstorage');
-                            break;
-                        case self.WEBSQL:
-                            driver = require('./drivers/websql');
-                    }
-
-                    self._extend(driver);
-                } else {
-                    self._extend(globalObject[driverName]);
+                var driver;
+                switch (driverName) {
+                    case self.INDEXEDDB:
+                        driver = asyncStorage;
+                        break;
+                    case self.LOCALSTORAGE:
+                        driver = localStorageWrapper;
+                        break;
+                    case self.WEBSQL:
+                        driver = webSQLStorage;
+                        break;
                 }
+                self._extend(driver);
             } else if (CustomDrivers[driverName]) {
                 self._extend(CustomDrivers[driverName]);
             } else {
