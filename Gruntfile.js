@@ -167,7 +167,83 @@ module.exports = exports = function(grunt) {
                 ],
                 tasks: ['jshint', 'jscs', 'shell:component', 'mocha:unit']
             }
-        }
+        },
+        umd: {
+            // There is apparently no easy way to glob this but it should be
+            // looked at again if this works.
+            'localstorage': {
+                src: 'src/drivers/localstorage.js',
+                dest: 'umd/drivers/localstorage.js',
+                objectToExport: 'localStorageWrapper',
+                globalAlias: 'localStorageWrapper',
+                deps: {
+                    args: ['localforageSerializer'],
+                    'default': ['localforageSerializer'],
+                    'amd': ['../utils/serializer.js'],
+                    'cjs': ['../utils/serializer.js']
+                }
+            },
+            'indexeddb': {
+                src: 'src/drivers/indexeddb.js',
+                dest: 'umd/drivers/indexeddb.js',
+                objectToExport: 'asyncStorage',
+                globalAlias: 'asyncStorage'
+            },
+            'websql': {
+                src: 'src/drivers/websql.js',
+                dest: 'umd/drivers/websql.js',
+                objectToExport: 'webSQLStorage',
+                globalAlias: 'webSQLStorage',
+                deps: {
+                    args: ['localforageSerializer'],
+                    'default': ['localforageSerializer'],
+                    'amd': ['../utils/serializer.js'],
+                    'cjs': ['../utils/serializer.js']
+                }
+            },
+            'serializer': {
+                src: 'src/utils/serializer.js',
+                dest: 'umd/utils/serializer.js',
+                objectToExport: 'localforageSerializer',
+                globalAlias: 'localforageSerializer'
+            },
+            'localforage': {
+                src: 'src/localforage.js',
+                dest: 'umd/localforage.js',
+                objectToExport: 'localforage',
+                globalAlias: 'localforage',
+                deps: {
+                    args: [
+                        'localStorageWrapper',
+                        'asyncStorage',
+                        'webSQLStorage',
+                        'localforageSerializer'
+                    ],
+                    'default': [
+                        'localStorageWrapper',
+                        'asyncStorage',
+                        'webSQLStorage',
+                        'localforageSerializer'
+                    ],
+                    'amd': {
+                        items:[
+                            './utils/serializer.js',
+                            './drivers/websql.js',
+                            './drivers/localstorage.js',
+                            './drivers/indexeddb.js'
+                        ]
+                    },
+                    'cjs': {
+                        items:[
+                            './utils/serializer.js',
+                            './drivers/websql.js',
+                            './drivers/localstorage.js',
+                            './drivers/indexeddb.js'
+                        ]
+                    }
+                }
+            }
+        },
     });
 
     require('load-grunt-tasks')(grunt);
@@ -177,6 +253,15 @@ module.exports = exports = function(grunt) {
     grunt.registerTask('publish', ['build', 'shell:publish-site']);
     grunt.registerTask('serve', ['build', 'connect:test', 'watch']);
     grunt.registerTask('site', ['shell:serve-site']);
+
+    var umdTasks = [
+        'umd:localstorage',
+        'umd:indexeddb',
+        'umd:websql',
+        'umd:serializer',
+        'umd:localforage'
+    ];
+    grunt.registerTask('umdAll', umdTasks);
 
     // These are the test tasks we run regardless of Sauce Labs credentials.
     var testTasks = [
