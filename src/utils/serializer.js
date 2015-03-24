@@ -1,4 +1,3 @@
-(function() {
     'use strict';
 
     // Sadly, the best way to save binary data in WebSQL/localStorage is serializing
@@ -217,14 +216,3 @@
         stringToBuffer: stringToBuffer,
         bufferToString: bufferToString
     };
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = localforageSerializer;
-    } else if (typeof define === 'function' && define.amd) {
-        define('localforageSerializer', function() {
-            return localforageSerializer;
-        });
-    } else {
-        this.localforageSerializer = localforageSerializer;
-    }
-}).call(window);

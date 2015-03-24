@@ -1,13 +1,13 @@
-/*
- * Includes code from:
- *
- * base64-arraybuffer
- * https://github.com/niklasvh/base64-arraybuffer
- *
- * Copyright (c) 2012 Niklas von Hertzen
- * Licensed under the MIT license.
- */
-(function() {
+    /*
+     * Includes code from:
+     *
+     * base64-arraybuffer
+     * https://github.com/niklasvh/base64-arraybuffer
+     *
+     * Copyright (c) 2012 Niklas von Hertzen
+     * Licensed under the MIT license.
+     */
+
     'use strict';
 
     // Promises!
@@ -403,14 +403,3 @@
         key: key,
         keys: keys
     };
-
-    if (moduleType === ModuleType.DEFINE) {
-        define('webSQLStorage', function() {
-            return webSQLStorage;
-        });
-    } else if (moduleType === ModuleType.EXPORT) {
-        module.exports = webSQLStorage;
-    } else {
-        this.webSQLStorage = webSQLStorage;
-    }
-}).call(window);

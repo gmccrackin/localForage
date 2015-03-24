@@ -1,8 +1,8 @@
-// If IndexedDB isn't available, we'll fall back to localStorage.
-// Note that this will have considerable performance and storage
-// side-effects (all data will be serialized on save and only data that
-// can be converted to a string via `JSON.stringify()` will be saved).
-(function() {
+    // If IndexedDB isn't available, we'll fall back to localStorage.
+    // Note that this will have considerable performance and storage
+    // side-effects (all data will be serialized on save and only data that
+    // can be converted to a string via `JSON.stringify()` will be saved).
+
     'use strict';
 
     // Promises!
@@ -316,14 +316,3 @@
         key: key,
         keys: keys
     };
-
-    if (moduleType === ModuleType.EXPORT) {
-        module.exports = localStorageWrapper;
-    } else if (moduleType === ModuleType.DEFINE) {
-        define('localStorageWrapper', function() {
-            return localStorageWrapper;
-        });
-    } else {
-        this.localStorageWrapper = localStorageWrapper;
-    }
-}).call(window);

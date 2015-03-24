@@ -1,4 +1,3 @@
-(function() {
     'use strict';
 
     // Promises!
@@ -405,16 +404,3 @@
     // The actual localForage object that we expose as a module or via a
     // global. It's extended by pulling in one of our other libraries.
     var localForage = new LocalForage();
-
-    // We allow localForage to be declared as a module or as a library
-    // available without AMD/require.js.
-    if (moduleType === ModuleType.DEFINE) {
-        define('localforage', function() {
-            return localForage;
-        });
-    } else if (moduleType === ModuleType.EXPORT) {
-        module.exports = localForage;
-    } else {
-        this.localforage = localForage;
-    }
-}).call(window);

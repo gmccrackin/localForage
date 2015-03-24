@@ -1,6 +1,6 @@
-// Some code originally from async_storage.js in
-// [Gaia](https://github.com/mozilla-b2g/gaia).
-(function() {
+    // Some code originally from async_storage.js in
+    // [Gaia](https://github.com/mozilla-b2g/gaia).
+
     'use strict';
 
     // Originally found in https://github.com/mozilla-b2g/gaia/blob/e8f624e4cc9ea945727278039b3bc9bcb9f8667a/shared/js/async_storage.js
@@ -376,14 +376,3 @@
         key: key,
         keys: keys
     };
-
-    if (typeof module !== 'undefined' && module.exports) {
-        module.exports = asyncStorage;
-    } else if (typeof define === 'function' && define.amd) {
-        define('asyncStorage', function() {
-            return asyncStorage;
-        });
-    } else {
-        this.asyncStorage = asyncStorage;
-    }
-}).call(window);
